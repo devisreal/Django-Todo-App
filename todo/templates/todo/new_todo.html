@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block linktags %}
+<link rel="stylesheet" href="{% static 'css/new_todo.css' %}">
+{% endblock %}
+{% block title %}New Todo | My Todo App{% endblock  %}
+
+{% block main %}
+
+<nav class="navbar navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1">New Todo</a>
+      </div>
+    </nav>
+
+    <!-- BODY -->
+
+    <!-- HOME BUTTON -->
+    <a href="{% url 'home-view' %}">
+        <div class="home-button p-2 mx-4">
+            <i class='bx bxs-home bx-sm ' style='color:#57bcd3' ></i>
+        </div>
+    </a>
+
+    <div class="form-container mx-auto">
+        <form action="" method="POST">
+           {% csrf_token %}
+
+           {{form.todo_title}}
+           {{form.todo_text}}           
+           <div class="d-flex checkbox">
+               {{form.is_completed}}
+               <label for="#" class="ms-2" >Is completed</label>
+           </div>
+
+            <div class="btn-sub w-auto ms-auto me-4 mt-5 ">
+                <button type="submit" class="submit-btn text-white btn btn-success"><i class='bx bx-plus-circle bx-fw'></i>Create</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,95 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block linktags %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block title %}My Todo App{% endblock  %}
+
+{% block main %}
+
+<nav class="navbar navbar-light">
+   <div class="container">
+      <a class="heading text-decoration-none text-white text-center mb-0 h4">Todo App</a>
+   </div>
+</nav>
+
+<div class="container px-0">
+   <div class="row gx-5">
+      <!-- LEFT COLUMN -->
+      <div class="col-md-5 col-sm-10 mx-auto p-3 container">
+         {% load static %}
+         <img src="{% static '/img/todo-image.png' %}" class="img-fluid" alt="Todo Image" />
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-md-6 col-sm-10 mx-auto mt- p-4">
+         <!-- TODO GROUP -->
+         <div class="card todo-group p-3">
+            
+            {% for todo in todos %}
+            <!-- TODO ITEM -->
+            <div class="todo-item pe-3" style="width: 100%">
+               <div class="row">
+                  <div class="col-10">
+                     <div class="card-body">
+                        <h5 class="card-title">
+                           <a href="{% url 'todo-details' todo.slug %}" class="text-">{{todo.todo_title|truncatechars:25}}</a>
+                        </h5>
+                        <p class="card-text ">
+                           {{todo.todo_text|truncatechars:30}}
+                        </p>
+                        <p class="card-subtitle text-muted">Completed: 
+                           {% if todo.is_completed == True  %}
+                              <i class='bx bxs-check-circle text-success'></i>
+                           {% else %}
+                              <i class='bx bxs-x-circle text-danger'></i>
+                           {% endif %}   
+                        </p>
+                     </div>
+                  </div>
+                  <div class="col my-auto ">
+                     <span class="">                        
+                        <a href="{% url 'edit-todo' todo.slug %}" class="" title="Edit" data-bs-toggle="tooltip" data-bs-placement="top"><i class='bx bxs-edit bx-sm text-secondary'></i></a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#modelId" class="" title="Edit" data-bs-toggle="tooltip" data-bs-placement="top"><i class='bx bxs-trash bx-sm text-danger'></i></a>                        
+                     </span>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modelId"  tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                  <div class="modal-content ">
+                     <div class="modal-header ">
+                        <h6 class="modal-title">Delete Todo ?</h6>
+                        <button type="button" class="btn btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                        <a href="{% url 'delete-todo' todo.slug %}" type="button" class="btn btn-danger btn-sm">Delete</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {% endfor %}
+
+            <br><br><br><br><br><br><br><br><br>
+
+         </div>
+
+         <a href="{% url 'new-todo' %}">
+            <div id="myBtn" title="New Todo" data-bs-toggle="tooltip" data-bs-placement="top">
+               <i class='bx bx-plus bx-sm ' style='color:#ffffff'></i>
+            </div>
+         </a>
+      </div>
+
+   </div>
+</div>
+
+
+{% endblock %}
+{% block scripttags %}
+
+{% endblock %}

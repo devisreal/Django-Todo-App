@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block linktags %}
+<link rel="stylesheet" href="{% static 'css/todo_details.css' %}">
+{% endblock %}
+{% block title %}Todo Details | My Todo App{% endblock  %}
+
+{% block main %}
+
+<nav class="navbar navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1">Todo Detail</a>
+      </div>
+    </nav>
+
+    <!-- BODY -->
+
+    <!-- HOME BUTTON -->
+    <a href="{% url 'home-view' %}">
+        <div class="home-button p-2 mx-4">
+            <i class='bx bxs-home bx-sm ' style='color: var(--blue-color)' ></i>
+        </div>
+    </a>
+
+    <div class="details-container mx-auto">
+        <h3 class="todo-title" >Todo: {{todo.todo_title}}</h3>
+        <p class="todo-text mt-3 h6" >{{todo.todo_text}}</p>
+        <p class="card-subtitle text-muted"><span class="fw-bold">Completed:</span> 
+            {% if todo.is_completed == True  %}
+                Yes
+            {% else %}
+                No
+            {% endif %}   
+        </p>
+        <div class="action-buttons">
+            <button type="button" class="delete-btn btn btn-danger btn-sm float-end  mx-1" data-bs-toggle="modal" data-bs-target="#modelId"><i class='bx bxs-trash bx-fw '></i>Delete</button>
+            <a class="update-btn btn btn-secondary btn-sm float-end mx-1 " href="{% url 'edit-todo' todo.slug %}"><i class='bx bxs-edit bx-fw '></i>Update</a>
+        </div>
+    </div>
+        
+    <!-- Modal -->
+    
+   <div class="modal fade " id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+          <div class="modal-content ">
+             <div class="modal-header ">
+                <h6 class="modal-title">Delete Todo ?</h6>
+                  <button type="button" class="btn btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'delete-todo' todo.slug %}" type="button" class="btn btn-danger btn-sm">Delete</a>
+             </div>
+          </div>
+       </div>
+    </div>
+   
+    
+
+{% endblock %}
+{% block scripttags %}
+
+{% endblock %}
